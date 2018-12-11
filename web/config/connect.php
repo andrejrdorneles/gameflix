@@ -7,7 +7,7 @@
   $server = 'us-cdbr-iron-east-01.cleardb.net';
   $user = 'b7dd97901cca9c';
   $password = '6591c14d';
-  $database= 'gameflix_db';
+  $database= 'heroku_5627424df39c2ee';
 
   $mysqli = new mysqli($server, $user, $password, $database);
   
