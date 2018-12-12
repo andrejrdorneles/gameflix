@@ -16,7 +16,7 @@ switch ($request_method) {
     $jogo_controller->put($data);
     break;
   case 'DELETE':
-    $jogo_controller->delete($data);
+    $jogo_controller->delete($_GET['id']);
     break;
   default:
     break;
@@ -82,10 +82,10 @@ class JogoController
     }
   }
 
-  public function delete($data)
+  public function delete($id)
   {
     try {
-      $sql = "DELETE FROM " . $this->tabela . " WHERE id = " . $data->id;
+      $sql = "DELETE FROM " . $this->tabela . " WHERE id = " . $id;
       $this->connection->query($sql);
     } catch (Exception $e) {
       echo json_response(500, $e);
