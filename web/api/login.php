@@ -43,6 +43,7 @@ class OperadorController
       }
       echo json_encode($operador);
     } catch (Exception $e) {
+      echo $e;
       echo json_response(500, $e);
     }
   }
