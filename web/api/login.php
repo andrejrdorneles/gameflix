@@ -44,8 +44,7 @@ class OperadorController
       
       echo json_encode($operador);
     } catch (Exception $e) {
-      header("HTTP/1.1 401 Unauthorized");
-      echo json_encode($e->getMessage());
+      echo json_response(500, $e);
     }
   }
 }
