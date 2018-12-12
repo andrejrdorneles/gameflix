@@ -27,9 +27,10 @@ class OperadorController
   public function post($data)
   {
     try {
-      $sql = "SELECT id, nome, login FROM operador WHERE login ='$data->login' AND senha = '$data->senha' ";
+      $sql = "SELECT id, nome, login, url_imagem FROM operador 
+              WHERE login ='$data->login' AND senha = '$data->senha'";
       $result = $this->connection->query($sql);
-      $operador = new Operador($result['id'], $result['nome'], $result['login']);
+      $operador = new Operador($result['id'], $result['nome'], $result['login'], $result['url_imagem']);
       echo json_encode($operador);
     } catch (Exception $e) {
       echo json_response(500, $e);
