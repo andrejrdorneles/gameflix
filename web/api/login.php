@@ -30,7 +30,7 @@ class OperadorController
       $sql = "SELECT id, nome, login, url_imagem FROM operador 
               WHERE login ='$data->login' AND senha = '$data->senha'";
       $result = $this->connection->query($sql);
-      $operador = new Operador($result['id'], $result['nome'], $result['login'], $result['url_imagem']);
+      $operador = new Operador($result[0]['id'], $result[0]['nome'], $result[0]['login'], $result[0]['url_imagem']);
       echo json_encode($operador);
     } catch (Exception $e) {
       echo json_response(500, $e);
