@@ -57,6 +57,7 @@ class JogoController
           $sql = $sql . " " . $condicional . " " . $filtro->campo . " LIKE '%" . $filtro->valor . "%'";
         }
       }
+      $sql = $sql." ORDER BY id DESC";
       $result = $this->connection->query($sql);
       $dados = array();
       while ($dado = $result->fetch_assoc()) {
