@@ -3,7 +3,7 @@ require_once('base_controller.php');
 require_once('../entidades/Operador.class.php');
 require_once('../config/connect.php');
 
-$jogo_controller = new OperadorController($mysqli, "jogo");
+$jogo_controller = new OperadorController($mysqli, "operador");
 
 switch ($request_method) {
   case 'POST':
