@@ -13,12 +13,6 @@ switch ($request_method) {
   case 'GET':
     $jogo_controller->get($data);
     break;
-  case 'PUT':
-    $jogo_controller->put($data);
-    break;
-  case 'DELETE':
-    $jogo_controller->delete($_GET['id']);
-    break;
   default:
     break;
 }
@@ -48,8 +42,8 @@ class LocacaoController
         $jogo_dados['url_imagem']
       );
 
-      $data_locacao = date('d/m/Y', strtotime($data->data_locacao));
-      $data_devolucao = date('d/m/Y', strtotime('+5 days', strtotime($data->data_locacao)));
+      $data_locacao = date('d-m-Y', strtotime($data->data_locacao));
+      $data_devolucao = date('d-m-Y', strtotime('+5 days', strtotime($data->data_locacao)));
       $sql = "INSERT INTO " . $this->tabela . " (data_locacao, data_devolucao, nome_usuario, jogo_id)
               VALUES ('$data_locacao', '$data_devolucao', '$data->nome_usuario', '$data->jogo_id')";
       $this->connection->query($sql);
@@ -70,44 +64,25 @@ class LocacaoController
   public function get($data)
   {
     try {
-      $sql = "SELECT * FROM " . $this->tabela;
-      if ($data->filtros !== null || !empty($data->filtros)) {
-        $sql = $sql . " WHERE ";
-        foreach ($data->filtros as $filtro) {
-          $condicional = is_null($filtro->condicional) || empty($filtro->condicional) ? "" : $filtro->condicional;
-          $sql = $sql . " " . $condicional . " " . $filtro->campo . " LIKE '%" . $filtro->valor . "%'";
-        }
-      }
+      $sql = "SELECT ".$this->tabela.".id, ".$this->tabela.".data_devolucao, ".$this->tabela.".data_locacao,".$this->tabela.".nome_usuario, 
+                      ".$this->tabela.".jogo_id, jogo.nome, jogo.url_imagem
+              FROM ".$this->tabela." 
+              INNER JOIN `jogo` ON jogo.id = locacao.jogo_id";
+
       $result = $this->connection->query($sql);
       $dados = array();
       while ($dado = $result->fetch_assoc()) {
-        $jogo = new Jogo($dado['id'], $dado['nome'], $dado['url_imagem']);
-        array_push($dados, $jogo);
+        $jogo = new Jogo($dado['jogo_id'], $dado['nome'], $dado['url_imagem']);
+        $locacao = new Locacao(
+          $dado['id'],
+          $dado['data_locacao'],
+          $dado['data_devolucao'],
+          $dado['nome_usuario'],
+          $jogo
+        );
+        array_push($dados, $locacao);
       }
       echo json_encode($dados);
-    } catch (Exception $e) {
-      echo json_response(500, $e);
-    }
-  }
-
-  public function put($data)
-  {
-    try {
-      $sql = "UPDATE " . $this->tabela . " SET nome = '$data->nome', url_imagem = '$data->url_imagem'
-              WHERE id = " . $data->id;
-      $this->connection->query($sql);
-      $jogo = new Jogo($data->id, $data->nome, $data->url_imagem);
-      echo json_encode($jogo);
-    } catch (Exception $e) {
-      echo json_response(500, $e);
-    }
-  }
-
-  public function delete($id)
-  {
-    try {
-      $sql = "DELETE FROM " . $this->tabela . " WHERE id = " . $id;
-      $this->connection->query($sql);
     } catch (Exception $e) {
       echo json_response(500, $e);
     }
