@@ -42,8 +42,8 @@ class LocacaoController
         $jogo_dados['url_imagem']
       );
 
-      $data_locacao = date('d-m-Y', strtotime($data->data_locacao));
-      $data_devolucao = date('d-m-Y', strtotime('+5 days', strtotime($data->data_locacao)));
+      $data_locacao = date('Y-m-d', strtotime($data->data_locacao));
+      $data_devolucao = date('Y-m-d', strtotime('+5 days', strtotime($data->data_locacao)));
       $sql = "INSERT INTO " . $this->tabela . " (data_locacao, data_devolucao, nome_usuario, jogo_id)
               VALUES ('$data_locacao', '$data_devolucao', '$data->nome_usuario', '$data->jogo_id')";
       $this->connection->query($sql);
