@@ -1,5 +1,6 @@
 <?php
   header("Access-Control-Allow-Origin: *");
+  header("Access-Control-Allow-Headers: *");
 
   $request_method = $_SERVER['REQUEST_METHOD'];
   $postdata = file_get_contents("php://input");
