@@ -30,6 +30,9 @@ class OperadorController
       $sql = "SELECT id, nome, login, url_imagem FROM operador 
               WHERE login ='$data->login' AND senha = '$data->senha'";
       $result = $this->connection->query($sql);
+      if(mysqli_num_rows($result) == 0){
+        throw new Exception("Usuário inválido");
+      }
       while($dado = $result->fetch_assoc()){
         $operador = new Operador(
           $dado['id'], 
