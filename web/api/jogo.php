@@ -19,6 +19,7 @@ switch ($request_method) {
     $jogo_controller->delete($data);
     break;
   default:
+    echo json_response(500, $e);
     break;
 }
 
