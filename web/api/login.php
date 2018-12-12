@@ -27,7 +27,7 @@ class OperadorController
   {
     try {
       $data->senha = md5($data->senha);
-      $sql = "SELECT id, nome, login, url_imagem FROM operador 
+      $sql = "SELECT id, nome, login, url_imagem FROM '$tabela' 
               WHERE login ='$data->login' AND senha = '$data->senha'";
       $result = $this->connection->query($sql);
       if (mysqli_num_rows($result) == 0) {

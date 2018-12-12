@@ -1,12 +1,22 @@
 <?php
   class Locacao {
-    private $id;
-    private $status;
-    private $midia;
+    public $id;
+    public $data_locacao;
+    public $data_devolucao;
+    public $nome_usuario;
+    public $jogo;
 
-    function __construct($status, $midia){
-      $this->status = $status;
-      $this->midia = $midia;
+    // public $status;
+    // public $midia;
+
+    function __construct($id, $data_locacao, $data_devolucao, $nome_usuario, $jogo /*$status, $midia*/){
+      $this->id = $id;
+      $this->data_locacao = $data_locacao;
+      $this->data_devolucao = $data_devolucao;
+      $this->nome_usuario = $nome_usuario;
+      $this->jogo = $jogo;
+      // $this->status = $status;
+      // $this->midia = $midia;
     }
   }
 ?>
