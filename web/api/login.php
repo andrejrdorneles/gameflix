@@ -10,7 +10,6 @@ switch ($request_method) {
     $jogo_controller->post($data);
     break;
   default:
-    echo json_response(500, $e);
     break;
 }
 
