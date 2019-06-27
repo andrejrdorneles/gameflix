@@ -1,5 +1,5 @@
 <?php
-  class Plataforma {
+  class Plataforma {//TODO ENUM
     private $id;
     private $nome;
 

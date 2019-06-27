@@ -1,5 +1,5 @@
 <?php
-  class Genero {
+  class Genero {//TODO ENUM
     private $id;
     private $nome;
 

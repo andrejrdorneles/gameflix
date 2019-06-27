@@ -1,15 +1,16 @@
 <?php
   class Pedido {
     private $id;
-    private $usuario;
-    private $operador;
     private $status;
     private $valor_total;
     private $valor_quitado;
     private $data_retirada;
+    private $cliente;
+    private $operador;
 
-    function __construct($usuario, $operador, $status, $valor_total, $valor_quitado, $data_retirada){
-      $this->usuario = $usuario;
+    function __construct($cliente, $operador, $status, $valor_total, 
+                          $valor_quitado, $data_retirada){
+      $this->cliente = $cliente;
       $this->operador = $operador;
       $this->status = $status;
       $this->valor_total = $valor_total;
