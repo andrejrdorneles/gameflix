@@ -45,6 +45,7 @@
 
     function mapearValoresUpdate($obj){
       $array = get_object_vars($obj);
+      unset($array["id"]);
       $map = "";
       $count = count($array);
       $i = 0;
