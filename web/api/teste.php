@@ -4,7 +4,7 @@ require_once('Base.controller.php');
 
 class Teste extends BaseController {
   public function post() {
-    echo json_encode($this->data);
+    echo getenv('MY_VAR');
   }
 }
 
