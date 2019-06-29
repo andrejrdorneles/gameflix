@@ -4,7 +4,7 @@ require_once('Base.controller.php');
 
 class Teste extends BaseController {
   public function post() {
-    echo getenv('MY_VAR');
+    echo getenv('PRD');
   }
 }
 
