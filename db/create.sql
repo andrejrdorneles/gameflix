@@ -52,7 +52,7 @@ ALTER TABLE jogo ADD CONSTRAINT jogo_pk PRIMARY KEY ( idjogo );
 CREATE TABLE locacao (
     idlocacao       INTEGER NOT NULL,
     datalocacao     DATE NOT NULL,
-    datadevolucao   DATE NOT NULL,
+    datadevolucao   DATE,
     status          INTEGER NOT NULL,
     idmidia         INTEGER NOT NULL,
     idpedido        INTEGER NOT NULL
@@ -84,8 +84,8 @@ ALTER TABLE operador ADD CONSTRAINT operador_pk PRIMARY KEY ( idoperador );
 CREATE TABLE pedido (
     idpedido       INTEGER NOT NULL,
     status         INTEGER NOT NULL,
-    valortotal     NUMBER NOT NULL,
-    valorquitado   NUMBER NOT NULL,
+    valortotal     NUMBER,
+    valorquitado   NUMBER,
     dataretirada   DATE NOT NULL,
     idcliente      INTEGER NOT NULL,
     idoperador     INTEGER NOT NULL
