@@ -4,6 +4,12 @@
   $user = 'GAMEFLIX';
   $password = 'GAMEFLIX';
 
+  if(getenv('PRD')){
+    $server = getenv('SERVER');
+    $server = getenv('USER');
+    $server = getenv('PASSWORD');
+  }
+
   $conn = oci_connect($user, $password, $server);
   if (!$conn) {
     $e = oci_error();
