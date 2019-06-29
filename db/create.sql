@@ -1,7 +1,7 @@
 CREATE TABLE categoria (
     idcategoria   INTEGER NOT NULL,
     nome          VARCHAR2(100) NOT NULL,
-    diaslocacao   DATE NOT NULL
+    diaslocacao   INTEGER NOT NULL
 );
 
 ALTER TABLE categoria ADD CONSTRAINT categoria_pk PRIMARY KEY ( idcategoria );

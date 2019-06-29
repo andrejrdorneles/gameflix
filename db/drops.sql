@@ -8,7 +8,7 @@ DROP TABLE alteracao_pedido;
 DROP TABLE cliente;
 DROP TABLE endereco;
 DROP TABLE operador;
-6
+
 DROP SEQUENCE clienteSEQ;
 
 DROP SEQUENCE operadorSEQ;
