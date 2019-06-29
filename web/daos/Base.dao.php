@@ -3,15 +3,39 @@
 
   class BaseDAO {
     private $tabela;
+    public $insertArray;
 
-    function __construct($tabela){
+    function __construct($tabela, $insertArray){
       $this->tabela = $tabela;
+      $this->insertArray = $insertArray;
+      $this->conn = $GLOBALS['conn'];
+    }
+
+    function closeConn(){
+      oci_close($this->conn);
+    }
+
+    function mapearCamposInsert(){
+      $map = "(";
+      $count = count($this->insertArray);
+      for ($i = 0; $i < $count; $i++){
+        $valor = $$this->insertArray[$i];
+      
+        $map .= $valor; 
+      
+        if($i != ($count - 1)){
+          $map .= ", ";
+        }else{
+          $map .= ") ";
+        }
+      }
+      return $map;
     }
 
     function mapearValoresInsert($valores){
       $map = " VALUES (";
       $count = count($valores);
-      for ($i = 0; $i < $count; $i++){//TODO while lenght
+      for ($i = 0; $i < $count; $i++){
         $valor = $valores[$i];
         if(is_string($valor)){
           $valor = "'".$valor."'";
@@ -29,18 +53,28 @@
     }
 
     function inserir($valores){
-      $sql = "INSERT INTO " . $this->tabela;
+      $sql = "INSERT INTO " . $this->tabela . " " . $this->mapearCamposInsert();
       $sql .= $this->mapearValoresInsert($valores);
+
+      $this->closeConn();
     }
 
     function buscar($id){
       $sql = "SELECT * FROM " . $this->tabela . " WHERE id" 
                 . $this->tabela . " = " . $id . ";";
+
+      $this->closeConn(); 
     }
 
     function deletar($id){
       $sql = "DELETE FROM " . $this->tabela . " WHERE id" 
                 . $this->tabela . " = " . $id . ";";
+
+      $this->closeConn();
+    }
+
+    function removeUnderline($valor){
+      return str_replace("_", "", $valor);
     }
 
     function mapearValoresUpdate($obj){
@@ -56,7 +90,7 @@
           $valor = "'".$valor."'";
         }
         
-        $map .= str_replace("_", "", $key) . " = " . $valor;
+        $map .= $this->removeUnderline($key) . " = " . $valor;
         
         if($i != ($count - 1)){
           $map .= ", ";
@@ -74,10 +108,17 @@
       $sql = "UPDATE ". $this->tabela . " SET ";
       $sql .= $this->mapearValoresUpdate($obj);
       $sql .= "WHERE id" . $this->tabela . " = " . $obj->id;
+
+      $this->closeConn();
     }
 
     function buscarTodos(){
-      $sql = "SELECT * FROM " . $this->tabela . ";";
+      $sql = "SELECT * FROM " . $this->tabela;
+      $stid = oci_parse($this->conn, $sql);
+      oci_execute($stid);
+      $this->closeConn();
+
+      return $stid;
     }
 
   }

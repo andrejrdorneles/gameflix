@@ -1,19 +1,15 @@
 <?php
 
-  // $db = mysqli_init();
-  // $db->ssl_set(PATH_TO_SSL_CLIENT_KEY_FILE, PATH_TO_SSL_CLIENT_CERT_FILE, PATH_TO_CA_CERT_FILE, null, null);
-  // $db->real_connect(HOSTNAME, USERNAME, PASSWORD, DATABASE_NAME);
-
-  $server = 'localhost';
+  $server = 'localhost/xe';
   $user = 'GAMEFLIX';
   $password = 'GAMEFLIX';
-  $database= 'gameflix';
 
-  $mysqli = new mysqli($server, $user, $password, $database);
-  
-  if ($mysqli->connect_errno) {
-    echo $mysqli->connect_errno, ' ', $mysqli->connect_error;
+  $conn = oci_connect($user, $password, $server);
+  if (!$conn) {
+    $e = oci_error();
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
   }
 
-  mysqli_set_charset($mysqli, "utf8");
+  $GLOBALS['conn'] = $conn;
+
 ?>

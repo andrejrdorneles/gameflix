@@ -8,6 +8,11 @@ abstract class BaseController
   public $data;
   public $request_method;
   public $get;
+  public $dao;
+
+  function __construct($dao){
+    $this->dao = $dao;
+  }
 
   public function listen(){
     $this->request_method = $_SERVER['REQUEST_METHOD'];
