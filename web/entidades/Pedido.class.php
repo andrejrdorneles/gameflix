@@ -8,8 +8,8 @@
     public $cliente;
     public $operador;
 
-    function __construct($id, $cliente, $operador, $status, $valor_total, 
-                          $valor_quitado, $data_retirada){
+    function __construct($id, $status,  $valor_total, $valor_quitado, 
+                          $data_retirada, $cliente, $operador){
       $this->id = $id;
       $this->cliente = $cliente;
       $this->operador = $operador;

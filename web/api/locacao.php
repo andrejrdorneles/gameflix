@@ -1,91 +1,47 @@
 <?php
-require_once('base_controller.php');
+require_once('Base.controller.php');
+require_once('../daos/Pedido.dao.php');
+require_once('../daos/Jogo.dao.php');
+require_once('../daos/Locacao.dao.php');
 require_once('../entidades/Jogo.class.php');
+require_once('../entidades/Categoria.class.php');
 require_once('../entidades/Locacao.class.php');
-require_once('../config/connect.php');
 
-$jogo_controller = new LocacaoController($mysqli, "locacao");
+class LocacaoController extends BaseController {
+  private $categoriaDAO;
+  private $jogoDAO;
 
-switch ($request_method) {
-  case 'POST':
-    $jogo_controller->post($data);
-    break;
-  case 'GET':
-    $jogo_controller->get($data);
-    break;
-  default:
-    break;
+  function __construct(){
+    parent::__construct(new LocacaoDAO());
+    $this->categoriaDAO = new CategoriaDAO();
+    $this->jogoDAO = new JogoDAO();
+  }
+
+  public function post() {
+    echo json_encode("LocacaoController");
+  }
+
+  public function get(){
+    $response = array();
+    $consulta = $this->dao->buscarTodos();
+    
+    while ($row = oci_fetch_array($consulta, OCI_NUM)) {
+
+      $getCat = oci_fetch_array($this->categoriaDAO->buscar($row[5]), OCI_NUM);
+      $getJogo = oci_fetch_array($this->jogoDAO->buscar($row[4]), OCI_NUM);
+
+      $categoria = new Categoria($getCat[0], $getCat[1], $getCat[2]);
+      $jogo = new Jogo($getJogo[0], $getJogo[1], $getJogo[2], $getJogo[3], $getJogo[4], $getJogo[5]);
+
+      $obj = new Locacao($row[0], $row[1], $row[2], $row[3], $jogo, $categoria);
+      array_push($response, $obj);
+    }
+    
+    echo json_encode($response);
+  }
 }
 
-class LocacaoController
-{
-  public $connection;
+$controller = new LocacaoController();
+$controller->listen();
 
-  public function __construct($mysqli, $tabela)
-  {
-    $this->connection = $mysqli;
-    $this->tabela = $tabela;
-  }
-
-  public function post($data)
-  {
-    try {
-      $jogo_sql = "SELECT * FROM jogo WHERE id = '$data->jogo_id'";
-      $jogo_result = $this->connection->query($jogo_sql);
-      if (mysqli_num_rows($jogo_result) == 0) {
-        throw new Exception("Jogo inválido");
-      }
-      $jogo_dados = mysqli_fetch_array($jogo_result);
-      $jogo = new Jogo(
-        $jogo_dados['id'],
-        $jogo_dados['nome'],
-        $jogo_dados['url_imagem']
-      );
-
-      $data_locacao = date('Y-m-d', strtotime($data->data_locacao));
-      $data_devolucao = date('Y-m-d', strtotime('+5 days', strtotime($data->data_locacao)));
-      $sql = "INSERT INTO " . $this->tabela . " (data_locacao, data_devolucao, nome_usuario, jogo_id)
-              VALUES ('$data_locacao', '$data_devolucao', '$data->nome_usuario', '$data->jogo_id')";
-      $this->connection->query($sql);
-      $id = $this->connection->insert_id;
-      $locacao = new Locacao(
-        $id,
-        $data_locacao,
-        $data_devolucao,
-        $data->nome_usuario,
-        $jogo
-      );
-      echo json_encode($locacao);
-    } catch (Exception $e) {
-      echo json_response(500, $e);
-    }
-  }
-
-  public function get($data)
-  {
-    try {
-      $sql = "SELECT ".$this->tabela.".id, ".$this->tabela.".data_devolucao, ".$this->tabela.".data_locacao,".$this->tabela.".nome_usuario, 
-                      ".$this->tabela.".jogo_id, jogo.nome, jogo.url_imagem
-              FROM ".$this->tabela." 
-              INNER JOIN `jogo` ON jogo.id = locacao.jogo_id";
-
-      $result = $this->connection->query($sql);
-      $dados = array();
-      while ($dado = $result->fetch_assoc()) {
-        $jogo = new Jogo($dado['jogo_id'], $dado['nome'], $dado['url_imagem']);
-        $locacao = new Locacao(
-          $dado['id'],
-          $dado['data_locacao'],
-          $dado['data_devolucao'],
-          $dado['nome_usuario'],
-          $jogo
-        );
-        array_push($dados, $locacao);
-      }
-      echo json_encode($dados);
-    } catch (Exception $e) {
-      echo json_response(500, $e);
-    }
-  }
-}
 ?>

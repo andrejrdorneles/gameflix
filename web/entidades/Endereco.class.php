@@ -10,13 +10,13 @@
 
     function __construct( $id, $rua, $numero, $bairro,  
                           $cidade, $estado, $cep){
+      $this->id = $id;
       $this->rua = $rua;
       $this->numero = $numero;
-      $this->cidade = $cidade;
       $this->bairro = $bairro;
+      $this->cidade = $cidade;
       $this->estado = $estado;
       $this->cep = $cep;
-      $this->id = $id;
     }
   }
 ?>

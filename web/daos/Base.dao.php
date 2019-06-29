@@ -61,9 +61,13 @@
 
     function buscar($id){
       $sql = "SELECT * FROM " . $this->tabela . " WHERE id" 
-                . $this->tabela . " = " . $id . ";";
+                . $this->tabela . " = " . $id;
 
-      $this->closeConn(); 
+      $stid = oci_parse($this->conn, $sql);
+      oci_execute($stid);
+      $this->closeConn();
+      
+      return $stid; 
     }
 
     function deletar($id){

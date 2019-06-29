@@ -7,7 +7,7 @@
     public $jogo;
     public $categoria;
     
-    function __construct($id, $jogo, $plataforma, $data_aquisicao){
+    function __construct($id, $plataforma, $data_aquisicao, $preco_locacao, $jogo, $categoria){
       $this->id = $id;
       $this->plataforma = $plataforma;
       $this->data_aquisicao = $data_aquisicao;

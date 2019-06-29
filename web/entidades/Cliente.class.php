@@ -5,13 +5,13 @@
     public $id;
     public $cpf;
     public $nome;
-    public $email;
     public $telefone;
-    public $endereco;
+    public $email;
     public $data_nascimento;
+    public $endereco;
 
     function __construct($id, $cpf, $nome, $email, $telefone, 
-                        $endereco, $data_nascimento){
+                          $data_nascimento, $endereco){
       $this->cpf = $cpf;
       $this->nome = $nome;
       $this->telefone = $telefone;
