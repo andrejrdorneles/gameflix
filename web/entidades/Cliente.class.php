@@ -10,8 +10,8 @@
     private $endereco;
     private $data_nascimento;
 
-    function __construct($cpf, $nome, $email, $telefone, 
-                        $endereco, $data_nascimento, $id){
+    function __construct($id, $cpf, $nome, $email, $telefone, 
+                        $endereco, $data_nascimento){
       $this->cpf = $cpf;
       $this->nome = $nome;
       $this->telefone = $telefone;

@@ -8,8 +8,8 @@
     private $estado;
     private $cep;
 
-    function __construct($rua, $numero, $bairro, $cidade, 
-                        $estado, $cep, $id){
+    function __construct( $id, $rua, $numero, $bairro,  
+                          $cidade, $estado, $cep){
       $this->rua = $rua;
       $this->numero = $numero;
       $this->cidade = $cidade;
