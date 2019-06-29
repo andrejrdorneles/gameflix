@@ -90,6 +90,14 @@ CREATE TABLE pedido (
     idcliente      INTEGER NOT NULL,
     idoperador     INTEGER NOT NULL
 );
+  
+CREATE TABLE alteracao_pedido
+( idalteracaopedido INTEGER,
+  idpedido INTEGER,
+  campoalterado VARCHAR(100),
+  valoralterado VARCHAR(100),
+  data date
+);
 
 ALTER TABLE pedido ADD CONSTRAINT pedido_pk PRIMARY KEY ( idpedido );
 
@@ -179,3 +187,9 @@ CREATE SEQUENCE categoriaSEQ
   START WITH 1
   INCREMENT BY 1
   NOCACHE;
+
+CREATE SEQUENCE alteracao_pedidoSEQ
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
