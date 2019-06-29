@@ -1,12 +1,12 @@
 <?php
   class Endereco {
-    private $id;
-    private $rua;
-    private $numero;
-    private $bairro;
-    private $cidade;
-    private $estado;
-    private $cep;
+    public $id;
+    public $rua;
+    public $numero;
+    public $bairro;
+    public $cidade;
+    public $estado;
+    public $cep;
 
     function __construct( $id, $rua, $numero, $bairro,  
                           $cidade, $estado, $cep){

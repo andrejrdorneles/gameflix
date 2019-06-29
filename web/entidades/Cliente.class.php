@@ -2,13 +2,13 @@
   include_once 'Endereco.class.php';
 
   class Cliente {
-    private $id;
-    private $cpf;
-    private $nome;
-    private $email;
-    private $telefone;
-    private $endereco;
-    private $data_nascimento;
+    public $id;
+    public $cpf;
+    public $nome;
+    public $email;
+    public $telefone;
+    public $endereco;
+    public $data_nascimento;
 
     function __construct($id, $cpf, $nome, $email, $telefone, 
                         $endereco, $data_nascimento){

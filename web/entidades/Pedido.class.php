@@ -1,12 +1,12 @@
 <?php
   class Pedido {
-    private $id;
-    private $status;
-    private $valor_total;
-    private $valor_quitado;
-    private $data_retirada;
-    private $cliente;
-    private $operador;
+    public $id;
+    public $status;
+    public $valor_total;
+    public $valor_quitado;
+    public $data_retirada;
+    public $cliente;
+    public $operador;
 
     function __construct($id, $cliente, $operador, $status, $valor_total, 
                           $valor_quitado, $data_retirada){

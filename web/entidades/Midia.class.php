@@ -1,11 +1,11 @@
 <?php
   class Midia {
-    private $id;
-    private $plataforma;
-    private $data_aquisicao;
-    private $preco_locacao;
-    private $jogo;
-    private $categoria;
+    public $id;
+    public $plataforma;
+    public $data_aquisicao;
+    public $preco_locacao;
+    public $jogo;
+    public $categoria;
     
     function __construct($id, $jogo, $plataforma, $data_aquisicao){
       $this->id = $id;

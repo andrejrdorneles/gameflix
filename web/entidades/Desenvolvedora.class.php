@@ -1,8 +1,8 @@
 <?php
   class Desenvolvedora {
-    private $id;
-    private $nome;
-    private $url_imgem;
+    public $id;
+    public $nome;
+    public $url_imgem;
 
     function __construct( $id, $nome, $url_imgem){
       $this->nome = $nome;

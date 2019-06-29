@@ -3,7 +3,7 @@
     public $id;
     public $nome;
     public $login;
-    public $senha;
+    private $senha;
     public $url_imagem;
 
     function __construct($id, $nome, $login, $senha, $url_imagem){
