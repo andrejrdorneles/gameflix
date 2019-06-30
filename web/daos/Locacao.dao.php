@@ -1,6 +1,7 @@
 <?php
   require_once('Base.dao.php');
   require_once('../entidades/Locacao.class.php');
+  require_once('../entidades/Status.enum.php');
   require_once('../daos/Midia.dao.php');
 
   class LocacaoDAO extends BaseDAO {
@@ -39,7 +40,7 @@
 
     function mapear($row){
       $midia = $this->midiaDAO->buscar($row[4]);
-      return new Locacao($row[0], $row[1], $row[2], $row[3], $midia, $row[5]);
+      return new Locacao($row[0], $row[1], $row[2], Status::get($row[3]), $midia, $row[5]);
     }
   }
 ?>

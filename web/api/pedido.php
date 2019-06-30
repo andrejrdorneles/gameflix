@@ -2,7 +2,6 @@
 require_once('Base.controller.php');
 require_once('../daos/Pedido.dao.php');
 
-
 class PedidoController extends BaseController {
 
   function __construct(){

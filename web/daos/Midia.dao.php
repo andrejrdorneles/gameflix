@@ -1,6 +1,7 @@
 <?php
   require_once('Base.dao.php');
   require_once('../entidades/Midia.class.php');
+  require_once('../entidades/Plataforma.enum.php');
   require_once('../daos/Jogo.dao.php');
   require_once('../daos/Categoria.dao.php');
   
@@ -38,7 +39,7 @@
     function mapear($row){
       $jogo = $this->jogoDAO->buscar($row[4]);
       $categoria = $this->categoriaDAO->buscar($row[5]);
-      return new Midia($row[0], $row[1], $row[2], $row[3], $jogo, $categoria);
+      return new Midia($row[0], Plataforma::get($row[1]), $row[2], $row[3], $jogo, $categoria);
     }
     
   }

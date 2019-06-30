@@ -1,7 +1,4 @@
 <?php
-  include_once 'Categoria.class.php';
-  include_once 'Desenvolvedora.class.php';
-  include_once 'Genero.class.php';
 
   class Jogo {
     public $id;

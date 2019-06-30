@@ -1,6 +1,7 @@
 <?php
   require_once('Base.dao.php');
   require_once('../entidades/Jogo.class.php');
+  require_once('../entidades/Genero.enum.php');
   require_once('../daos/Desenvolvedora.dao.php');
   require_once('../entidades/Desenvolvedora.class.php');
 
@@ -34,7 +35,7 @@
 
     function mapear($row){
       $desenvolvedora = $this->desenvolvedoraDAO->buscar($row[5]);
-      return new Jogo($row[0], $row[1], $row[2], $row[3], $row[4], $desenvolvedora);
+      return new Jogo($row[0], $row[1], $row[2], Genero::get($row[3]), $row[4], $desenvolvedora);
     }
   }
 ?>

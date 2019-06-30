@@ -1,6 +1,7 @@
 <?php
   require_once('Base.dao.php');
   require_once('../entidades/Pedido.class.php');
+  require_once('../entidades/Status.enum.php');
   require_once('../daos/Operador.dao.php');
   require_once('../daos/Cliente.dao.php');
   require_once('../daos/Locacao.dao.php');
@@ -35,7 +36,7 @@
       $cliente = $this->clienteDAO->buscar($row[5]);
       $operador = $this->operadorDAO->buscar($row[6]);
       $locacoes = $this->locacaoDAO->buscarPorIdPedido($row[0]);
-      return new Pedido($row[0], $row[1], $row[2], $row[3], $row[4], $cliente, $operador, $locacoes);
+      return new Pedido($row[0], Status::get($row[1]), $row[2], $row[3], $row[4], $cliente, $operador, $locacoes);
     }
   }
 ?>
