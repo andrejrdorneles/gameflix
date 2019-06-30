@@ -4,6 +4,9 @@ INSERT INTO CLIENTE VALUES(CLIENTESEQ.nextval, 123456789, 'Maria Antonieta Da Á
 INSERT INTO PEDIDO VALUES(PEDIDOSEQ.nextval, 1, NULL, NULL, sysdate, 1 ,1);
 INSERT INTO DESENVOLVEDORA VALUES(DESENVOLVEDORASEQ.nextval, 'CD Projekt', 'https://pbs.twimg.com/profile_images/924947343077773312/8KIZSNlv_400x400.jpg');
 INSERT INTO JOGO VALUES (JOGOSEQ.nextval, 'Cyberpunk 2077', 'https://media.comicbook.com/2019/06/cyberpunk-2077-non-lethal-1174992-1280x0.jpeg', 1, sysdate, 1);
+INSERT INTO JOGO VALUES (JOGOSEQ.nextval, 'The Witcher 3: Wild Hunt', 'https://images.g2a.com/newlayout/323x433/1x1x0/06114476276e/59108976ae653aa55c6ac1f2', 1, sysdate, 1);
 INSERT INTO CATEGORIA VALUES (CATEGORIASEQ.nextval, 'Lançamento', 5);
 INSERT INTO MIDIA VALUES(MIDIASEQ.nextval, 1, sysdate, 7.99, 1, 1);
+INSERT INTO MIDIA VALUES(MIDIASEQ.nextval, 1, sysdate, 7.99, 2, 1);
 INSERT INTO LOCACAO VALUES(LOCACAOSEQ.nextval, sysdate, NULL, 1, 1, 1);
+INSERT INTO LOCACAO VALUES(LOCACAOSEQ.nextval, sysdate, NULL, 1, 2, 1);

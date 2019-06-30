@@ -1,3 +1,10 @@
+CREATE OR REPLACE TYPE midia_disponivel AS OBJECT ( idmidia INTEGER, nomejogo VARCHAR(255), nomeplat VARCHAR(255), nomecat VARCHAR(255));
+/
+CREATE OR REPLACE TYPE midias_disponiveis AS TABLE OF midia_disponivel; 
+/
+CREATE OR REPLACE TYPE midia_mais_pedida AS OBJECT ( idmidia INTEGER, quantidade INTEGER);
+/
+
 create or replace
   TRIGGER armazena_alteracao_pedido 
   after UPDATE ON pedido 
@@ -30,7 +37,7 @@ create or replace
   for each row
 BEGIN
 
-:new.idcategoria := CategoriaSEQ.nextval;
+  :new.idcategoria := CategoriaSEQ.nextval;
 
 END inserir_id_categoria;
 /
@@ -41,7 +48,7 @@ create or replace
   for each row
 BEGIN
 
-:new.idcliente := ClienteSEQ.nextval;
+  :new.idcliente := ClienteSEQ.nextval;
 
 END inserir_id_cliente;
 /
@@ -52,7 +59,7 @@ create or replace
   for each row
 BEGIN
 
-:new.iddesenvolvedora := DesenvolvedoraSEQ.nextval;
+  :new.iddesenvolvedora := DesenvolvedoraSEQ.nextval;
 
 END inserir_id_desenvolvedora;
 /
@@ -63,7 +70,7 @@ create or replace
   for each row
 BEGIN
 
-:new.idendereco := EnderecoSEQ.nextval;
+  :new.idendereco := EnderecoSEQ.nextval;
 
 END inserir_id_endereco;
 /
@@ -74,7 +81,7 @@ create or replace
   for each row
 BEGIN
 
-:new.idjogo := JogoSEQ.nextval;
+  :new.idjogo := JogoSEQ.nextval;
 
 END inserir_id_jogo;
 /
@@ -85,7 +92,7 @@ create or replace
   for each row
 BEGIN
 
-:new.idlocacao := LocacaoSEQ.nextval;
+  :new.idlocacao := LocacaoSEQ.nextval;
 
 END inserir_id_locacao;
 /
@@ -96,7 +103,7 @@ create or replace
   for each row
 BEGIN
 
-:new.idmidia := MidiaSEQ.nextval;
+  :new.idmidia := MidiaSEQ.nextval;
 
 END inserir_id_midia;
 /
@@ -107,7 +114,7 @@ create or replace
   for each row
 BEGIN
 
-:new.idoperador := OperadorSEQ.nextval;
+  :new.idoperador := OperadorSEQ.nextval;
 
 END inserir_id_operador;
 /
@@ -118,18 +125,9 @@ create or replace
   for each row
 BEGIN
 
-:new.idpedido := PedidoSEQ.nextval;
+  :new.idpedido := PedidoSEQ.nextval;
 
 END inserir_id_pedido;
-/
-
-
-
-CREATE OR REPLACE TYPE midia_disponivel AS OBJECT ( idmidia INTEGER, nomejogo VARCHAR(255), nomeplat VARCHAR(255), nomecat VARCHAR(255));
-/
-CREATE OR REPLACE TYPE midias_disponiveis AS TABLE OF midia_disponivel; 
-/
-CREATE OR REPLACE TYPE midia_mais_pedida AS OBJECT ( idmidia INTEGER, quantidade INTEGER);
 /
 
 
@@ -190,7 +188,6 @@ create or replace package body pck_gameflix_functions is
     
     FUNCTION update_regist_quitacao_prev(pIdJogo NUMBER) return NUMBER IS
     v_valor_restante number;
-
     v_idpedido pedido.idpedido%type;
     v_preco_locacao midia.precolocacao%type;
     
@@ -202,10 +199,12 @@ create or replace package body pck_gameflix_functions is
         inner join midia m on l.idmidia = m.idmidia
         inner join jogo j on j.idjogo = m.idjogo
         and l.status = 1
-        and j.idjogo = 1;
+        and j.idjogo = pIdJogo;
         
-        update locacao l set l.status = 2 where l.idpedido = v_idpedido;
-        update pedido p set p.valorquitado = v_preco_locacao where p.idpedido = v_idpedido;
+        IF(v_idpedido IS NOT NULL) THEN
+            update locacao l set l.status = 2 where l.idpedido = v_idpedido;
+            update pedido p set p.valorquitado = v_preco_locacao where p.idpedido = v_idpedido;
+        END IF;
         
         RETURN v_valor_restante;
     
@@ -274,10 +273,13 @@ CREATE OR REPLACE FUNCTION midia_mais_pedida_no_intervalo(pDataInicial DATE, pDa
 BEGIN
 
   SELECT contagem, idmidia INTO v_contagem, v_idmidia FROM (
-  SELECT count(*) as contagem, m.idmidia as idmidia from pedido p inner join locacao l on l.idpedido = p.idpedido
-  inner join midia m on m.idmidia = l.idmidia 
-  where p.dataretirada between pDataInicial and pDataFinal
-  group by m.idmidia order by contagem desc) temp where rownum = 1;
+    SELECT count(*) as contagem, m.idmidia as idmidia 
+    from pedido p 
+    inner join locacao l on l.idpedido = p.idpedido
+    inner join midia m on m.idmidia = l.idmidia 
+    where p.dataretirada between pDataInicial and pDataFinal
+    group by m.idmidia order by contagem desc
+  ) temp where rownum = 1;
 
   midia_contagem := midia_mais_pedida(v_idmidia, v_contagem);
 
@@ -290,18 +292,20 @@ END midia_mais_pedida_no_intervalo;
 CREATE OR REPLACE PROCEDURE calcula_valor_pedido(pIdPedido IN integer, pSomaValoresLocacoes OUT NUMBER) as 
 BEGIN
 
-  select sum(precolocacao) into pSomaValoresLocacoes from locacao inner join midia on locacao.idmidia = midia.idmidia
-  inner join pedido p on locacao.idpedido = p.idpedido where p.idpedido = pidpedido;
-  update pedido set valortotal = pSomaValoresLocacoes where pedido.idpedido = pIdPedido; 
+  select sum(precolocacao) 
+  into pSomaValoresLocacoes 
+  from locacao
+  inner join midia on locacao.idmidia = midia.idmidia
+  where locacao.idpedido = pIdPedido;
+  update pedido set valortotal = pSomaValoresLocacoes where pedido.idpedido = pIdPedido;
 
 END;
 /
 
 
 CREATE OR REPLACE PROCEDURE media_locacoes_por_cliente(media OUT NUMBER) is
-v_contagem_locacoes INTEGER;
-v_contagem_clientes INTEGER;
-
+  v_contagem_locacoes INTEGER;
+  v_contagem_clientes INTEGER;
 BEGIN
   select count(*) into v_contagem_locacoes from locacao;
   select count(*) into v_contagem_clientes from cliente;
@@ -312,18 +316,17 @@ END media_locacoes_por_cliente;
 /
 
 
-CREATE OR REPLACE PROCEDURE calcula_data_devolucao(pIdmidia IN INTEGER) is
-v_dias_locacao INTEGER;
-
+CREATE OR REPLACE PROCEDURE calcula_data_devolucao(pIdmidia IN INTEGER, pIdLocacao IN INTEGER) is
+  v_dias_locacao INTEGER;
 BEGIN
 
-SELECT diaslocacao into v_dias_locacao from categoria c 
+  SELECT diaslocacao 
+  into v_dias_locacao 
+  from categoria c 
   inner join midia m on m.idcategoria = c.idcategoria
-  inner join locacao l on l.idmidia = m.idmidia 
-  where m.idmidia = pIdmidia 
-  and l.status = 1;
+  where m.idmidia = pIdmidia;
 
-  UPDATE locacao l set l.datadevolucao = sysdate + v_dias_locacao where l.idmidia = pIdmidia and l.status = 1;
+  UPDATE locacao l set l.datadevolucao = sysdate + v_dias_locacao where l.idlocacao = pIdLocacao;
 
 END calcula_data_devolucao;
 /

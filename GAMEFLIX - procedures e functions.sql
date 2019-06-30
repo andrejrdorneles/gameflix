@@ -1,6 +1,3 @@
-CREATE OR REPLACE TYPE midias_disponiveis AS TABLE OF midia_disponivel; 
-CREATE OR REPLACE TYPE midia_disponivel AS OBJECT ( idmidia INTEGER, nomejogo VARCHAR(255), nomeplat VARCHAR(255), nomecat VARCHAR(255));
-
 CREATE OR REPLACE FUNCTION buscar_midias_disponiveis_com_categoria return midias_disponiveis IS
     v_midias_disponiveis  midias_disponiveis := midias_disponiveis();
     
@@ -62,7 +59,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('v_Return = ' || v_Return); 
 END;
 
-CREATE OR REPLACE TYPE midia_mais_pedida AS OBJECT ( idmidia INTEGER, quantidade INTEGER);
+
 CREATE OR REPLACE FUNCTION midia_mais_pedida_no_intervalo(pDataInicial DATE, pDataFinal DATE) return midia_mais_pedida IS
     midia_contagem midia_mais_pedida;
 

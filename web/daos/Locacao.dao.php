@@ -47,7 +47,20 @@
     function inserir($valores){
       $valores = $array = get_object_vars($valores);
       $result = parent::inserir($valores);
-      
+
+      $calcula_valor_pedido = "DECLARE pSoma NUMBER;";
+      $calcula_valor_pedido .= "BEGIN calcula_valor_pedido(" . $valores[$this->insertArray[4]] . ", pSoma);";
+      $calcula_valor_pedido .= "END;";
+      $stid_calcula_valor_pedido = oci_parse($this->conn, $calcula_valor_pedido);
+      oci_execute($stid_calcula_valor_pedido);
+
+      $calcula_data_devolucao = "BEGIN calcula_data_devolucao(" . $valores[$this->insertArray[3]] . ", " . $result . ");";
+      $calcula_data_devolucao .= "END;";
+      $stid_calcula_data_devolucao = oci_parse($this->conn, $calcula_data_devolucao);
+      oci_execute($stid_calcula_data_devolucao);
+
+      $this->closeConn();
+
       return $this->mapearArray($result, $valores);
     }
 

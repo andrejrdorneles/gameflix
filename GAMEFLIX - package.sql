@@ -1,8 +1,8 @@
 create or replace package pck_gameflix_functions is
 
   function midia_mais_pedida_no_intervalo(pDataInicial DATE, pDataFinal DATE) return midia_mais_pedida;
-  function buscar_midias_disponiveis_com_categoria return midias_disponiveis;
-  function atualizar_registro_quitacao_previa (pIdJogo NUMBER) return NUMBER;
+  function get_midias_disp_c_categ return midias_disponiveis;
+  function update_regist_quitacao_prev (pIdJogo NUMBER) return NUMBER;
   
 end pck_gameflix_functions;
 
@@ -27,7 +27,7 @@ create or replace package body pck_gameflix_functions is
     
     END midia_mais_pedida_no_intervalo;
 
-    FUNCTION buscar_midias_disponiveis_com_categoria return midias_disponiveis IS
+    FUNCTION get_midias_disp_c_categ return midias_disponiveis IS
     v_midias_disponiveis  midias_disponiveis := midias_disponiveis();
     
     CURSOR midias IS
@@ -49,9 +49,9 @@ create or replace package body pck_gameflix_functions is
         END LOOP;
         
         RETURN v_midias_disponiveis;
-    END buscar_midias_disponiveis_com_categoria;
+    END get_midias_disp_c_categ;
     
-    FUNCTION atualizar_registro_quitacao_previa(pIdJogo NUMBER) return NUMBER IS
+    FUNCTION update_regist_quitacao_prev(pIdJogo NUMBER) return NUMBER IS
     v_valor_restante number;
 
     v_idpedido pedido.idpedido%type;
@@ -72,6 +72,6 @@ create or replace package body pck_gameflix_functions is
         
         RETURN v_valor_restante;
     
-    END atualizar_registro_quitacao_previa;
+    END update_regist_quitacao_prev;
 
 end pck_gameflix_functions;
