@@ -111,8 +111,7 @@
       return str_replace("_", "", $valor);
     }
 
-    function mapearValoresUpdate($obj){
-      $array = get_object_vars($obj);
+    function mapearValoresUpdate($array){
       unset($array["id"]);
       $map = "";
       $count = count($array);
@@ -141,8 +140,9 @@
     function atualizar($obj){
       $sql = "UPDATE ". $this->tabela . " SET ";
       $sql .= $this->mapearValoresUpdate($obj);
-      $sql .= "WHERE id" . $this->tabela . " = " . $obj->id;
-
+      $sql .= "WHERE id" . $this->tabela . " = " . $obj["id"];
+      $stid = oci_parse($this->conn, $sql);
+      oci_execute($stid);
       $this->closeConn();
     }
 

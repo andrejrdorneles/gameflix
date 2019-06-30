@@ -12,10 +12,6 @@ class MidiaController extends BaseController {
     $this->jogoDAO = new JogoDAO();
   }
 
-  public function post() {
-    echo json_encode("MidiaController");
-  }
-
 }
 
 $controller = new MidiaController();

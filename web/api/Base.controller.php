@@ -58,7 +58,9 @@ abstract class BaseController
   }
 
   public function put() {
-    echo 'Not implemented';
+    $response = $this->dao->atualizar($this->data);
+
+    echo json_encode($response);
   }
 
   public function delete() {

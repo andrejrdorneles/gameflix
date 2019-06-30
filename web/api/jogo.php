@@ -8,10 +8,6 @@ class JogoController extends BaseController {
     parent::__construct(new JogoDAO());
   }
 
-  public function post() {
-    echo json_encode("JogoController");
-  }
-
 }
 
 $controller = new JogoController();

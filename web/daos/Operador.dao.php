@@ -33,6 +33,13 @@
       return $this->mapearArray($result, $valores);
     }
 
+    function atualizar($valores){
+      $valores = $array = get_object_vars($valores);
+      $result = parent::atualizar($valores);
+      
+      return $this->mapearArray($valores['id'], $valores);
+    }
+
     function mapearArray($result, $valores){
       return $this->mapear(array($result, $valores[$this->insertArray[0]], 
         $valores[$this->insertArray[1]],$valores[$this->insertArray[2]],

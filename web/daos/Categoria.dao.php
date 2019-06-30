@@ -25,6 +25,24 @@
       return $this->mapear($result);
     }
 
+    function inserir($valores){
+      $valores = $array = get_object_vars($valores);
+      $result = parent::inserir($valores);
+      
+      return $this->mapearArray($result, $valores);
+    }
+
+    function atualizar($valores){
+      $valores = $array = get_object_vars($valores);
+      $result = parent::atualizar($valores);
+      
+      return $this->mapearArray($valores['id'], $valores);
+    }
+
+    function mapearArray($result, $valores){
+      return $this->mapear(array($result, $valores[$this->insertArray[0]], $valores[$this->insertArray[1]]));
+    }
+
     function mapear($row){
       return new Categoria($row[0], $row[1], $row[2]);
     }

@@ -12,10 +12,6 @@ class LocacaoController extends BaseController {
     $this->jogoDAO = new JogoDAO();
   }
 
-  public function post() {
-    echo json_encode("LocacaoController");
-  }
-
 }
 
 $controller = new LocacaoController();

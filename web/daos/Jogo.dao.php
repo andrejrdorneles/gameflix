@@ -33,6 +33,26 @@
       return $this->mapear($result);
     }
 
+    function inserir($valores){
+      $valores = $array = get_object_vars($valores);
+      $result = parent::inserir($valores);
+      
+      return $this->mapearArray($result, $valores);
+    }
+
+    function atualizar($valores){
+      $valores = $array = get_object_vars($valores);
+      $result = parent::atualizar($valores);
+      
+      return $this->mapearArray($valores['id'], $valores);
+    }
+
+    function mapearArray($result, $valores){
+      return $this->mapear(array($result, $valores[$this->insertArray[0]], 
+        $valores[$this->insertArray[1]], $valores[$this->insertArray[2]],
+        $valores[$this->insertArray[3]], $valores[$this->insertArray[4]]));
+    }
+
     function mapear($row){
       $desenvolvedora = $this->desenvolvedoraDAO->buscar($row[5]);
       return new Jogo($row[0], $row[1], $row[2], Genero::get($row[3]), $row[4], $desenvolvedora);
