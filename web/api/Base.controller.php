@@ -15,9 +15,11 @@ abstract class BaseController
   }
 
   public function listen(){
+    $postdata = file_get_contents("php://input");
+    $data = json_decode($postdata);
     $this->request_method = $_SERVER['REQUEST_METHOD'];
     $this->get = $_GET;
-    $this->data = file_get_contents("php://input");
+    $this->data = $data;
 
     switch ($this->request_method) {
       case 'POST':
@@ -39,7 +41,9 @@ abstract class BaseController
   }
 
   public function post() {
-    echo 'Not implemented';
+    $response = $this->dao->inserir($this->data);
+
+    echo json_encode($response);
   }
 
   public function get() {

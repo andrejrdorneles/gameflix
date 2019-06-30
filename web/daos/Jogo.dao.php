@@ -11,7 +11,7 @@
 
     function __construct(){
       parent::__construct("Jogo", 
-        array("nome", "urlImagem", "genero", "dataLancamento", "idDesenvolvedora"));
+        array("nome", "url_imagem", "genero", "data_lancamento", "id_desenvolvedora"));
       $this->desenvolvedoraDAO = new DesenvolvedoraDAO();
     }
 

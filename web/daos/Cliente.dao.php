@@ -8,7 +8,7 @@
 
     function __construct(){
       parent::__construct("Cliente", 
-        array("cpf", "nome", "telefone", "email", "datanascimento", "idendereco"));
+        array("cpf", "nome", "telefone", "email", "data_nascimento", "id_endereco"));
       $this->enderecoDAO = new EnderecoDAO();
     }
 

@@ -10,7 +10,7 @@
 
     function __construct(){
       parent::__construct("Locacao", 
-        array("datalocacao", "datadevolucao", "status", "idmidia", "idpedido"));
+        array("data_locacao", "data_devolucao", "status", "id_midia", "id_pedido"));
       $this->midiaDAO = new MidiaDAO();
     }
 

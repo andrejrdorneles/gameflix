@@ -1,14 +1,7 @@
 <?php
-require_once('Base.controller.php');
+$postdata = file_get_contents("php://input");
+$data = json_decode($postdata);
 
-
-class Teste extends BaseController {
-  public function post() {
-    echo getenv('PRD');
-  }
-}
-
-$teste = new Teste();
-$teste->listen();
+echo json_encode($data);
 
 ?>

@@ -4,7 +4,7 @@
 
   class DesenvolvedoraDAO extends BaseDAO {
     function __construct(){
-      parent::__construct("Desenvolvedora", array("nome", "diasLocacao"));
+      parent::__construct("Desenvolvedora", array("nome", "url_imagem"));
     }
 
     function buscarTodos(){
@@ -23,6 +23,16 @@
       $result = oci_fetch_array(parent::buscar($id), OCI_NUM);
 
       return $this->mapear($result);
+    }
+
+    function inserir($valores){
+      $result = parent::inserir($valores);
+      
+      return $this->mapearArray($result, $valores);
+    }
+
+    function mapearArray($id, $objeto){
+      return $this->mapear(array($id, $objeto->nome, $objeto->url_imagem));
     }
 
     function mapear($row){

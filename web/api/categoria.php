@@ -8,10 +8,6 @@ class CategoriaController extends BaseController {
     parent::__construct(new CategoriaDAO());
   }
 
-  public function post() {
-    echo json_encode("CategoriaController");
-  }
-
   public function get(){
     $response = $this->dao->buscarTodos();
     

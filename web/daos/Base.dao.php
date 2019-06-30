@@ -19,7 +19,7 @@
       $map = "(";
       $count = count($this->insertArray);
       for ($i = 0; $i < $count; $i++){
-        $valor = $$this->insertArray[$i];
+        $valor = $this->removeUnderline($this->insertArray[$i]);
       
         $map .= $valor; 
       
@@ -33,22 +33,28 @@
     }
 
     function mapearValoresInsert($valores){
-      $map = " VALUES (";
-      $count = count($valores);
+      $array = get_object_vars($valores);
+      unset($array["id"]);
+      $map = " VALUES(";
+      $count = count($array);
+      $i = 0;
+
       for ($i = 0; $i < $count; $i++){
-        $valor = $valores[$i];
+        $valor = $array[$this->insertArray[$i]];
+        
         if(is_string($valor)){
           $valor = "'".$valor."'";
         }
-      
+
         $map .= $valor; 
       
         if($i != ($count - 1)){
           $map .= ", ";
         }else{
-          $map .= ");";
+          $map .= ") RETURNING ID" . $this->tabela . " INTO :rid";
         }
       }
+
       return $map;
     }
 
@@ -56,7 +62,14 @@
       $sql = "INSERT INTO " . $this->tabela . " " . $this->mapearCamposInsert();
       $sql .= $this->mapearValoresInsert($valores);
 
+      $stid = oci_parse($this->conn, $sql);
+      $id = null;
+      oci_bind_by_name($stid, ":rid", $id);
+      oci_execute($stid);
+
       $this->closeConn();
+
+      return $id;
     }
 
     function buscar($id){

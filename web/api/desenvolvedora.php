@@ -8,10 +8,6 @@ class DesenvolvedoraController extends BaseController {
     parent::__construct(new DesenvolvedoraDAO());
   }
 
-  public function post() {
-    echo json_encode("DesenvolvedoraController");
-  }
-
   public function get(){
     $response = $this->dao->buscarTodos();
     

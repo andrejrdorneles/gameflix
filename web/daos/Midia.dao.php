@@ -13,7 +13,7 @@
 
     function __construct(){
       parent::__construct("Midia", 
-        array("plataforma", "dataaquisicao", "precolocacao", "idjogo", "idcategoria"));
+        array("plataforma", "data_aquisicao", "preco_locacao", "id_jogo", "id_categoria"));
       $this->jogoDAO = new JogoDAO();
       $this->categoriaDAO = new CategoriaDAO();
     }

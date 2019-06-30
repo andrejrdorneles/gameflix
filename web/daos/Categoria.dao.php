@@ -4,7 +4,7 @@
 
   class CategoriaDAO extends BaseDAO {
     function __construct(){
-      parent::__construct("CATEGORIA", array("nome", "diasLocacao"));
+      parent::__construct("CATEGORIA", array("nome", "dias_locacao"));
     }
 
     function buscarTodos(){
