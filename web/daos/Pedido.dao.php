@@ -14,7 +14,7 @@
     
     function __construct(){
       parent::__construct("Pedido", 
-        array("status", "valortotal", "valorquitado", "dataretirada", "idcliente", "idoperador"));
+        array("status", "valor_total", "valor_quitado", "data_retirada", "id_cliente", "id_operador"));
       $this->clienteDAO = new ClienteDAO();
       $this->operadorDAO = new OperadorDAO();
       $this->locacaoDAO = new LocacaoDAO();
