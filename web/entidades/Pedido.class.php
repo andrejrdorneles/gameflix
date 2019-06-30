@@ -7,9 +7,10 @@
     public $data_retirada;
     public $cliente;
     public $operador;
+    public $locacoes = array();
 
     function __construct($id, $status,  $valor_total, $valor_quitado, 
-                          $data_retirada, $cliente, $operador){
+                          $data_retirada, $cliente, $operador, $locacoes){
       $this->id = $id;
       $this->cliente = $cliente;
       $this->operador = $operador;
@@ -17,6 +18,7 @@
       $this->valor_total = $valor_total;
       $this->valor_quitado = $valor_quitado;
       $this->data_retirada = $data_retirada;
+      $this->locacoes = $locacoes;
     }
   }
 ?>

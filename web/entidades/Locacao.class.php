@@ -5,7 +5,7 @@
     public $data_devolucao;
     public $status;
     public $midia;
-    public $pedido;//TODO review
+    private $pedido;
 
     function __construct($id, $data_locacao, $data_devolucao, $status,
                           $midia, $pedido ){

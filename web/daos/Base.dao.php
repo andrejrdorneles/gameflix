@@ -1,7 +1,7 @@
 <?php
   require_once('../config/connect.php');
 
-  class BaseDAO {
+  abstract class BaseDAO {
     private $tabela;
     public $insertArray;
 
@@ -70,6 +70,17 @@
       return $stid; 
     }
 
+    function buscarPorCampoEValor($campo, $valor){
+      $sql = "SELECT * FROM " . $this->tabela . " WHERE " 
+                . $campo . " = " . $valor;
+
+      $stid = oci_parse($this->conn, $sql);
+      oci_execute($stid);
+      $this->closeConn();
+
+      return $stid; 
+    }
+
     function deletar($id){
       $sql = "DELETE FROM " . $this->tabela . " WHERE id" 
                 . $this->tabela . " = " . $id . ";";
@@ -124,6 +135,8 @@
 
       return $stid;
     }
+
+    abstract function mapear($row);
 
   }
 ?>

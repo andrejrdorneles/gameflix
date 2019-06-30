@@ -1,7 +1,6 @@
 <?php
 require_once('Base.controller.php');
 require_once('../daos/Categoria.dao.php');
-require_once('../entidades/Categoria.class.php');
 
 class CategoriaController extends BaseController {
 
@@ -14,13 +13,7 @@ class CategoriaController extends BaseController {
   }
 
   public function get(){
-    $response = array();
-    $consulta = $this->dao->buscarTodos();
-    
-    while ($row = oci_fetch_array($consulta, OCI_NUM)) {
-      $obj = new Categoria($row[0], $row[1], $row[2]);
-      array_push($response, $obj);
-    }
+    $response = $this->dao->buscarTodos();
     
     echo json_encode($response);
   }
