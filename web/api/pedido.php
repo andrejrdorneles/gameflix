@@ -8,11 +8,6 @@ class PedidoController extends BaseController {
     parent::__construct(new PedidoDAO());
   }
 
-  public function get(){
-    $response = $this->dao->buscarTodos();
-    
-    echo json_encode($response);
-  }
 }
 
 $controller = new PedidoController();

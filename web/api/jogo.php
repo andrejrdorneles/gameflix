@@ -12,11 +12,6 @@ class JogoController extends BaseController {
     echo json_encode("JogoController");
   }
 
-  public function get(){
-    $response = $this->dao->buscarTodos();
-    
-    echo json_encode($response);
-  }
 }
 
 $controller = new JogoController();

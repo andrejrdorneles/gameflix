@@ -8,11 +8,6 @@ class ClienteController extends BaseController {
     parent::__construct(new ClienteDAO());
   }
 
-  public function get(){
-    $response = $this->dao->buscarTodos();
-    
-    echo json_encode($response);
-  }
 }
 
 $controller = new ClienteController();

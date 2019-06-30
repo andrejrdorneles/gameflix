@@ -8,11 +8,6 @@ class OperadorController extends BaseController {
     parent::__construct(new OperadorDAO());
   }
 
-  public function get(){
-    $response = $this->dao->buscarTodos();
-    
-    echo json_encode($response);
-  }
 }
 
 $controller = new OperadorController();

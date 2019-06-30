@@ -26,6 +26,19 @@
       return $this->mapear($result);
     }
 
+    function inserir($valores){
+      $valores = get_object_vars($valores);
+      $result = parent::inserir($valores);
+      
+      return $this->mapearArray($result, $valores);
+    }
+
+    function mapearArray($result, $valores){
+      return $this->mapear(array($result, $valores[$this->insertArray[0]], 
+        $valores[$this->insertArray[1]],$valores[$this->insertArray[2]],
+        $valores[$this->insertArray[3]]));
+    }
+
     function mapear($row){
       return new Operador($row[0], $row[1], $row[2], $row[3], $row[4]);
     }

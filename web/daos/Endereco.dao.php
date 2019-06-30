@@ -10,8 +10,15 @@
 
     function buscar($id){
       $result = oci_fetch_array(parent::buscar($id), OCI_NUM);
-
+      
       return $this->mapear($result);
+    }
+
+    function mapearArray($result, $valores){
+      return $this->mapear(array($result, $valores[$this->insertArray[0]], 
+        $valores[$this->insertArray[1]], $valores[$this->insertArray[2]],
+        $valores[$this->insertArray[3]], $valores[$this->insertArray[4]],
+        $valores[$this->insertArray[5]]));
     }
 
     function mapear($row){

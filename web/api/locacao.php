@@ -16,11 +16,6 @@ class LocacaoController extends BaseController {
     echo json_encode("LocacaoController");
   }
 
-  public function get(){
-    $response = $this->dao->buscarTodos();
-    
-    echo json_encode($response);
-  }
 }
 
 $controller = new LocacaoController();

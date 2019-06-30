@@ -30,6 +30,22 @@
       return $this->mapear($result);
     }
 
+    function inserir($valores){
+      $valores = $array = get_object_vars($valores);
+      $id_endereco = $this->enderecoDAO->inserir($valores);
+      $valores["id_endereco"] = $id_endereco;
+      $result = parent::inserir($valores);
+      
+      return $this->mapearArray($result, $valores, $id_endereco);
+    }
+
+    function mapearArray($result, $valores){
+      return $this->mapear(array($result, $valores[$this->insertArray[0]], 
+        $valores[$this->insertArray[1]], $valores[$this->insertArray[2]],
+        $valores[$this->insertArray[3]], $valores[$this->insertArray[4]],
+        $valores[$this->insertArray[5]]));
+    }
+
     function mapear($row){
       $endereco = $this->enderecoDAO->buscar($row[6]);
       return new Cliente($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $endereco);

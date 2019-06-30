@@ -26,13 +26,14 @@
     }
 
     function inserir($valores){
+      $valores = $array = get_object_vars($valores);
       $result = parent::inserir($valores);
       
       return $this->mapearArray($result, $valores);
     }
 
-    function mapearArray($id, $objeto){
-      return $this->mapear(array($id, $objeto->nome, $objeto->url_imagem));
+    function mapearArray($result, $valores){
+      return $this->mapear(array($result, $valores[$this->insertArray[0]], $valores[$this->insertArray[1]]));
     }
 
     function mapear($row){

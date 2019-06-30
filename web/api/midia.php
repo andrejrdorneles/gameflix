@@ -16,11 +16,6 @@ class MidiaController extends BaseController {
     echo json_encode("MidiaController");
   }
 
-  public function get(){
-    $response = $this->dao->buscarTodos();
-    
-    echo json_encode($response);
-  }
 }
 
 $controller = new MidiaController();

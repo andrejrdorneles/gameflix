@@ -32,11 +32,10 @@
       return $map;
     }
 
-    function mapearValoresInsert($valores){
-      $array = get_object_vars($valores);
+    function mapearValoresInsert($array){
       unset($array["id"]);
       $map = " VALUES(";
-      $count = count($array);
+      $count = count($this->insertArray);
       $i = 0;
 
       for ($i = 0; $i < $count; $i++){
@@ -59,9 +58,11 @@
     }
 
     function inserir($valores){
+      if(!is_array ($valores)){
+        $valores = get_object_vars($valores);
+      }
       $sql = "INSERT INTO " . $this->tabela . " " . $this->mapearCamposInsert();
       $sql .= $this->mapearValoresInsert($valores);
-
       $stid = oci_parse($this->conn, $sql);
       $id = null;
       oci_bind_by_name($stid, ":rid", $id);
@@ -95,10 +96,15 @@
     }
 
     function deletar($id){
+      $response = $this->buscar($id);
       $sql = "DELETE FROM " . $this->tabela . " WHERE id" 
-                . $this->tabela . " = " . $id . ";";
+                . $this->tabela . " = " . $id;
 
+      $stid = oci_parse($this->conn, $sql);
+      oci_execute($stid);
       $this->closeConn();
+
+      return $response;
     }
 
     function removeUnderline($valor){

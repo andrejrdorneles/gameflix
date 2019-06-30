@@ -47,7 +47,14 @@ abstract class BaseController
   }
 
   public function get() {
-    echo 'Not implemented';
+    $response = null;
+    if($this->get){
+      $response = $this->dao->buscar($this->get['id']);
+    } else {
+      $response = $this->dao->buscarTodos();
+    }
+    
+    echo json_encode($response);
   }
 
   public function put() {
@@ -55,7 +62,9 @@ abstract class BaseController
   }
 
   public function delete() {
-    echo 'Not implemented';
+    $response = $this->dao->deletar($this->get['id']);
+
+    echo json_encode($response);
   }
 }
 

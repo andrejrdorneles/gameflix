@@ -20,6 +20,12 @@
       $this->locacaoDAO = new LocacaoDAO();
     }
 
+    function buscar($id){
+      $result = oci_fetch_array(parent::buscar($id), OCI_NUM);
+
+      return $this->mapear($result);
+    }
+
     function buscarTodos(){
       $response = array();
       $result = parent::buscarTodos();
